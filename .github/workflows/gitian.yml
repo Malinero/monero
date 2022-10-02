@@ -29,12 +29,11 @@ jobs:
     - name: build
       run: |
         id
-        echo $USER
         echo ${{ github.ref_name }}
-        curl -O https://raw.githubusercontent.com/monero-project/monero/${{ github.ref_name }}/contrib/gitian/gitian-build.py
+        curl -O https://raw.githubusercontent.com/malinero/monero/${{ github.ref_name }}/contrib/gitian/gitian-build.py
         chmod +x gitian-build.py
-        sudo ./gitian-build.py --setup --docker github-actions ${{ github.ref_name }}
-        sudo ./gitian-build.py --docker --detach-sign --no-commit --build -j 3 -o ${{ matrix.operating-system.option }} github-actions ${{ github.ref_name }}
+        ./gitian-build.py --setup --docker github-actions ${{ github.ref_name }}
+        ./gitian-build.py --docker --detach-sign --no-commit --build -j 3 -o ${{ matrix.operating-system.option }} github-actions ${{ github.ref_name }}
     - name: post build
       run: |
         shasum -a256 out/${{ github.ref_name }}/*
